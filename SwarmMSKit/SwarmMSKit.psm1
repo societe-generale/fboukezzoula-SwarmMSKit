@@ -4,8 +4,11 @@ Function global:PurgeTempMountFolder {
     param([String]$TempMountFolder)
 
     if ((Test-Path -Path $TempMountFolder)) {    
+        try {   
         Remove-Item -Path $TempMountFolder -Recurse -Force | Out-Null         
-    }     
+    }    catch [System.Managament.Automation.ActionPreferenceStopException]{
+        Write-Host "$TempMountFolder was purged Sucessfully"
+    }
 }
 
 # Simple pause function for waiting the VM booting or waiting the tools installation, etc ...
